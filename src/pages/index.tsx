@@ -76,7 +76,7 @@ export default function IndexPage({
                     'opacity-75 transition duration-1000 group-hover:opacity-100 group-hover:duration-200'
                   )}
                 />
-                <ButtonLink href='#intro'>See what I've made</ButtonLink>
+                <ButtonLink href='/projects'>See what I've made</ButtonLink>
               </div>
               <ButtonLink href='/about'>Learn about what I do</ButtonLink>
             </div>
