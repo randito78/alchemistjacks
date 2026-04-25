@@ -9,32 +9,32 @@ describe('All Page', () => {
 
   it('should display index page', () => {
     cy.visit('/');
-    cy.get('h1').should('contain', 'You can call me Clarence');
+    cy.get('h1').should('contain', 'Alchemist');
   });
 
   it('should display about page', () => {
     cy.visit('/about');
-    cy.get('h1').should('contain', 'Theodorus Clarence');
+    cy.get('h2').should('contain', 'AlchemistJack');
   });
 
-  it('should display blog page', () => {
-    cy.visit('/blog');
-    cy.get('h1').should('contain', 'Blog');
+  it('should display guestbook page', () => {
+    cy.visit('/guestbook');
+    cy.get('h1').should('contain', 'Guestbook');
   });
 
-  it('should display library page', () => {
-    cy.visit('/library');
-    cy.get('h1').should('contain', 'Library');
-  });
-
-  it('should display projects page', () => {
+  it('should display projects listing page', () => {
     cy.visit('/projects');
     cy.get('h1').should('contain', 'Projects');
   });
 
+  it('should display a project post page', () => {
+    cy.visit('/projects/dianaconch');
+    cy.get('h1').should('contain', 'Diana Conch');
+  });
+
   it('should display subscribe page', () => {
     cy.visit('/subscribe');
-    cy.get('h1').should('contain', 'Subscribe to theodorusclarence.com');
+    cy.get('h1').should('contain', 'Subscribe to alchemistjacks.com');
   });
 
   it('should display trf bca page', () => {

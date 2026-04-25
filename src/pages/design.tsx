@@ -26,7 +26,7 @@ export default function DesignPage() {
             </h1>
 
             <p data-fade='1' className='mt-2 text-gray-600 dark:text-gray-300'>
-              theodorusclarence.com color palette
+              alchemistjacks.com color palette
             </p>
 
             <div
@@ -71,27 +71,28 @@ const THEME_COLORS = [
   },
   {
     title: 'Primary 200',
-    subTitle: '#dbff00',
+    subTitle: '#eee6d0',
     colorClassName: 'bg-primary-200',
   },
   {
     title: 'Primary 300',
-    subTitle: '#00e887',
+    subTitle: '#be9a44',
     colorClassName: 'bg-primary-300',
   },
   {
     title: 'Primary 400',
-    subTitle: '#00e0f3',
+    subTitle: '#8a6630',
     colorClassName: 'bg-primary-400',
   },
   {
     title: 'Primary 500',
-    subTitle: '#00bfff',
+    subTitle: '#583e1e',
     colorClassName: 'bg-primary-500',
   },
   {
     title: 'Gradient',
-    subTitle: '#00e0f3 to #00bfff',
-    colorClassName: 'bg-gradient-to-tr from-primary-300 to-primary-500',
+    subTitle: '#eee6d0 → #be9a44 → #583e1e',
+    colorClassName:
+      'bg-gradient-to-br from-primary-200 via-primary-300 to-primary-500',
   },
 ];

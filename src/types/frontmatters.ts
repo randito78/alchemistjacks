@@ -14,32 +14,16 @@ export type BlogFrontmatter = {
   repost?: string;
 };
 
-export type ContentType = 'blog' | 'library' | 'projects';
+/** MDX content under `src/contents/projects` (project write-ups). */
+export type ContentType = 'projects';
 
-export type PickFrontmatter<T extends ContentType> = T extends 'blog'
-  ? BlogFrontmatter
-  : T extends 'library'
-  ? LibraryFrontmatter
-  : ProjectFrontmatter;
+export type PickFrontmatter<T extends ContentType> = BlogFrontmatter;
 
 export type InjectedMeta = { views?: number; likes?: number };
 
 export type BlogType = {
   code: string;
   frontmatter: BlogFrontmatter;
-};
-
-export type LibraryFrontmatter = {
-  slug: string;
-  title: string;
-  readingTime: ReadTimeResults;
-  description: string;
-  tags: string;
-};
-
-export type LibraryType = {
-  code: string;
-  frontmatter: LibraryFrontmatter;
 };
 
 export type ProjectFrontmatter = {
@@ -61,9 +45,6 @@ export type ProjectType = {
   frontmatter: ProjectFrontmatter;
 };
 
-export type FrontmatterWithTags = BlogFrontmatter | LibraryFrontmatter;
+export type FrontmatterWithTags = BlogFrontmatter;
 export type FrontmatterWithDate = BlogFrontmatter | ProjectFrontmatter;
-export type Frontmatter =
-  | ProjectFrontmatter
-  | BlogFrontmatter
-  | LibraryFrontmatter;
+export type Frontmatter = ProjectFrontmatter | BlogFrontmatter;

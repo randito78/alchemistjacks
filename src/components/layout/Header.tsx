@@ -13,7 +13,7 @@ type HeaderProps = {
 export default function Header({ large = false }: HeaderProps) {
   //#region  //*=========== Route Functionality ===========
   const router = useRouter();
-  /** Ex: /projects/petrolida-2021 -> ['', 'projects', 'petrolida-2021'] */
+  /** Ex: /projects/dianaconch -> ['', 'projects', 'dianaconch'] */
   const arrOfRoute = router.route.split('/');
   const baseRoute = '/' + arrOfRoute[1];
   //#endregion  //*======== Route Functionality ===========
@@ -55,7 +55,7 @@ export default function Header({ large = false }: HeaderProps) {
       </a>
 
       {/* Gradient List */}
-      <div className='h-2 bg-gradient-to-tr from-primary-200 via-primary-300 to-primary-400' />
+      <div className='h-2 bg-gradient-to-tr from-primary-200 via-primary-300 to-primary-500' />
 
       <div className='bg-white transition-colors dark:bg-dark dark:text-white'>
         <nav
@@ -81,7 +81,7 @@ export default function Header({ large = false }: HeaderProps) {
                       'transition-colors',
                       'bg-primary-300/0 group-hover:bg-primary-300/20 dark:group-hover:bg-primary-300/0',
                       href === baseRoute &&
-                        '!bg-primary-300/50 dark:bg-gradient-to-tr dark:from-primary-300 dark:to-primary-400 dark:bg-clip-text dark:text-transparent'
+                      '!bg-primary-300/40 dark:bg-gradient-to-br dark:from-primary-200 dark:via-primary-300 dark:to-primary-500 dark:bg-clip-text dark:text-transparent'
                     )}
                   >
                     {label}
@@ -99,8 +99,6 @@ export default function Header({ large = false }: HeaderProps) {
 
 const links = [
   { href: '/', label: 'Home' },
-  { href: '/blog', label: 'Blog' },
   { href: '/projects', label: 'Projects' },
-  { href: '/shorts', label: 'Shorts' },
   { href: '/about', label: 'About' },
 ];

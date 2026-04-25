@@ -112,23 +112,22 @@ export async function getAllFilesFrontmatter<T extends ContentType>(type: T) {
 }
 
 export async function getRecommendations(currSlug: string) {
-  const frontmatters = await getAllFilesFrontmatter('blog');
+  const frontmatters = await getAllFilesFrontmatter('projects');
 
-  // Get current frontmatter
   const currentFm = frontmatters.find((fm) => fm.slug === currSlug);
 
-  // Remove currentFm and Bahasa Posts, then randomize order
   const otherFms = frontmatters
     .filter((fm) => !fm.slug.startsWith('id-') && fm.slug !== currSlug)
     .sort(() => Math.random() - 0.5);
 
-  // Find with similar tags
+  const currentTags = (currentFm?.tags ?? '').split(',').filter(Boolean);
   const _recommendations = otherFms.filter((op) =>
-    op.tags.split(',').some((p) => currentFm?.tags.split(',').includes(p))
+    (op.tags ?? '')
+      .split(',')
+      .some((p) => currentTags.includes(p))
   );
   const recommendations = sortByDate(_recommendations);
 
-  // Populate with random recommendations if not enough
   const threeRecommendations =
     recommendations.length >= 3
       ? recommendations
@@ -139,7 +138,6 @@ export async function getRecommendations(currSlug: string) {
           ),
         ];
 
-  // Only return first three
   return threeRecommendations.slice(0, 3);
 }
 
@@ -150,8 +148,7 @@ export function getFeatured<T extends Frontmatter>(
   contents: Array<T>,
   features: string[]
 ) {
-  // override as T because there is no typechecking on the features array
-  return features.map(
-    (feat) => contents.find((content) => content.slug === feat) as T
-  );
+  return features
+    .map((feat) => contents.find((content) => content.slug === feat))
+    .filter((item): item is T => item != null);
 }

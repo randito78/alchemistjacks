@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>theodorusclarence.com</h1>
+  <h1>alchemistjacks</h1>
   <p>💠 Personal website and blog made using Next.js, TypeScript, Tailwind CSS, MDX Bundler, Prisma, and SWR.</p>
 </div>
 
@@ -9,7 +9,7 @@ With the revamp in November 2024, the new design and animations repository will 
 
 This repository will remain open-sourced for you to see the structure and the tech stack I used. There's no significant changes aside from the new design.
 
-If you need to see the old version of the website, you can check them on [old.theodorusclarence.com](https://old.theodorusclarence.com). Do note that the view & like count features are disabled.
+If you need to see the old version of the website, you can check them on [old.alchemistjacks.com](https://old.alchemistjacks.com). Do note that the view & like count features are disabled.
 
 ## Notable Features
 
@@ -39,6 +39,6 @@ https://user-images.githubusercontent.com/55318172/132983796-9187857f-bbf2-4bb0-
 
 ### Spotify Now Playing
 
-Check out the [tutorial](https://theodorusclarence.com/blog/spotify-now-playing).
+Check out the [tutorial](https://alchemistjacks.com/projects/spotify-now-playing).
 
 ![image](https://user-images.githubusercontent.com/55318172/132983710-000cc6c8-a466-4314-ad3f-656d9dc1a1e4.png)

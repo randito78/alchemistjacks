@@ -8,6 +8,12 @@ const withRemoteRefresh = require('next-remote-refresh')({
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  async redirects() {
+    return [
+      { source: '/blog', destination: '/projects', permanent: true },
+      { source: '/blog/:path*', destination: '/projects/:path*', permanent: true },
+    ];
+  },
   eslint: {
     dirs: ['src'],
   },
@@ -18,25 +24,6 @@ const nextConfig = {
       // Spotify Album
       'i.scdn.co',
     ],
-  },
-  async redirects() {
-    return [
-      {
-        source: '/library/absolute-import',
-        destination: '/shorts/react/absolute-import',
-        permanent: true,
-      },
-      {
-        source: '/library',
-        destination: '/shorts',
-        permanent: true,
-      },
-      {
-        source: '/library/:slug',
-        destination: '/shorts/:slug',
-        permanent: true,
-      },
-    ];
   },
 };
 

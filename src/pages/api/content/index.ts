@@ -23,9 +23,12 @@ export default async function handler(
       const devto = await getViewsFromDevto();
 
       const content = _content.map((meta) => {
-        const devtoViews = meta.slug.startsWith('b_')
-          ? devto?.find((i) => i.slug === meta.slug.replace('b_', ''))?.views
-          : undefined;
+        const devtoViews =
+          meta.slug.startsWith('b_') || meta.slug.startsWith('p_')
+            ? devto?.find(
+                (i) => i.slug === meta.slug.replace(/^b_|^p_/, '')
+              )?.views
+            : undefined;
 
         return {
           slug: meta.slug,

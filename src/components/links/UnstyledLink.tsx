@@ -24,7 +24,7 @@ export default function UnstyledLink({
   if (!isNewTab) {
     return (
       <Link href={href}>
-        <a {...rest} className={className}>
+        <a {...rest} className={clsx('cursor-pointer', className)}>
           {children}
         </a>
       </Link>
@@ -37,7 +37,7 @@ export default function UnstyledLink({
       rel='noopener noreferrer'
       href={href}
       {...rest}
-      className={clsx(className, 'cursor-newtab')}
+      className={clsx(className, 'cursor-pointer')}
     >
       {children}
     </a>

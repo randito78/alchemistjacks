@@ -12,23 +12,34 @@ export async function getViewsFromDevto() {
     );
 
     return res.data
-      .filter((d) =>
-        d.canonical_url.includes('https://theodorusclarence.com/blog')
+      .filter(
+        (d) =>
+          d.canonical_url.includes('alchemistjacks.com/projects/') ||
+          d.canonical_url.includes('alchemistjacks.com/blog/') ||
+          d.canonical_url.includes('theodorusclarence.com/projects/') ||
+          d.canonical_url.includes('theodorusclarence.com/blog/')
       )
-      .map((d) => ({
-        slug: d.canonical_url.slice(35),
-        views: d.page_views_count,
-      }));
+      .map((d) => {
+        const match = d.canonical_url.match(
+          /(?:alchemistjacks|theodorusclarence)\.com\/(?:blog|projects)\/([^/?#]+)/
+        );
+        return {
+          slug: match?.[1] ?? '',
+          views: d.page_views_count,
+        };
+      })
+      .filter((d) => d.slug.length > 0);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
   }
 }
 
-export async function getArticleViewsFromDevto(blogSlug: string) {
+export async function getArticleViewsFromDevto(contentSlug: string) {
   try {
     const _devto = await getViewsFromDevto();
-    const devto = _devto?.find((i) => i.slug === blogSlug.replace('b_', ''));
+    const key = contentSlug.replace(/^b_|^p_/, '');
+    const devto = _devto?.find((i) => i.slug === key);
 
     return devto?.views;
   } catch (error) {

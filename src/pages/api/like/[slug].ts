@@ -49,7 +49,7 @@ export default async function handler(
       });
 
       let devtoViews: number | undefined;
-      if (slug.startsWith('b_')) {
+      if (slug.startsWith('b_') || slug.startsWith('p_')) {
         devtoViews = await getArticleViewsFromDevto(slug);
       }
 

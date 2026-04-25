@@ -48,21 +48,21 @@ const TWEET_REGEXP = new RegExp(
 const devtoFooter = `
 ---
 
-> Originally posted on [my personal site](https://theodorusclarence.com/?ref=devto), find more [blog posts](https://theodorusclarence.com/blog?ref=devto) and [code snippets library](https://theodorusclarence.com/library?ref=devto) I put up for easy access on my site 🚀
+> Originally posted on [my personal site](https://alchemistjacks.com/?ref=devto), find more [projects](https://alchemistjacks.com/?ref=devto#projects) and [code snippets library](https://alchemistjacks.com/library?ref=devto) I put up for easy access on my site 🚀
 
-Like this post? [Subscribe to my newsletter](https://theodorusclarence.com/subscribe?ref=devto) to get notified every time a new post is out!`;
+Like this post? [Subscribe to my newsletter](https://alchemistjacks.com/subscribe?ref=devto) to get notified every time a new project write-up is out!`;
 
 const hashnodeFooter = `
 ---
 
-> Originally posted on [my personal site](https://theodorusclarence.com/?ref=hashnode), find more [blog posts](https://theodorusclarence.com/blog?ref=hashnode) and [code snippets library](https://theodorusclarence.com/library?ref=hashnode) I put up for easy access on my site 🚀
+> Originally posted on [my personal site](https://alchemistjacks.com/?ref=hashnode), find more [projects](https://alchemistjacks.com/?ref=hashnode#projects) and [code snippets library](https://alchemistjacks.com/library?ref=hashnode) I put up for easy access on my site 🚀
 
-Like this post? [Subscribe to my newsletter](https://theodorusclarence.com/subscribe?ref=hashnode) to get notified every time a new post is out!`;
+Like this post? [Subscribe to my newsletter](https://alchemistjacks.com/subscribe?ref=hashnode) to get notified every time a new project write-up is out!`;
 //#endregion  //*======== Footers ===========
 
 const slug = process.argv[2];
 const fileName = [
-  ...glob.sync(join(process.cwd(), 'src', 'contents', 'blog', `${slug}.mdx`)),
+  ...glob.sync(join(process.cwd(), 'src', 'contents', 'projects', `${slug}.mdx`)),
 ][0];
 
 if (!fileName) {
@@ -157,12 +157,27 @@ devto();
 hashnode();
 
 //#region  //*=========== Download OG Image ===========
+const getOgBannerAbsoluteUrl = (banner) => {
+  const site = 'https://alchemistjacks.com';
+  let name = String(banner ?? '').trim();
+  if (!name) return `${site}/images/`;
+  if (name.startsWith('@')) name = name.slice(1);
+  name = name.replace(/^\/+/, '');
+  for (const prefix of ['public/images/', 'images/']) {
+    if (name.startsWith(prefix)) {
+      name = name.slice(prefix.length);
+      break;
+    }
+  }
+  return `${site}/images/${name}`;
+};
+
 const getOgImage = () => {
   readFile(fileName, 'utf8', (err, content) => {
     if (err) reject(err);
 
     const { data: frontmatter } = matter(content);
-    const bannerLink = `https://res.cloudinary.com/theodorusclarence/image/upload/f_auto,c_fill,ar_4:5,w_1200/theodorusclarence/banner/${frontmatter.banner}`;
+    const bannerLink = getOgBannerAbsoluteUrl(frontmatter.banner);
     const ogLink = `https://og.clarence.link/api/blog?templateTitle=${encodeURIComponent(
       frontmatter.title
     )}&banner=${encodeURIComponent(bannerLink)}`;

@@ -5,15 +5,16 @@
 :root {
   /* Customize these variable */
   /* https://github.com/adamwathan/tailwind-css-variable-text-opacity-demo */
-  --tw-clr-primary-200: 219 255 0;
-  --tw-clr-primary-300: 0 232 135;
-  --tw-clr-primary-400: 0 224 243;
-  --tw-clr-primary-500: 0 196 253;
+  /* Metallic gold: desaturated, wide highlight → shadow (not flat yellow) */
+  --tw-clr-primary-200: 238 230 208;
+  --tw-clr-primary-300: 190 154 68;
+  --tw-clr-primary-400: 138 102 48;
+  --tw-clr-primary-500: 88 62 30;
 
-  --clr-primary-200: rgb(var(--tw-clr-primary-200)); /* #DBFF00 */
-  --clr-primary-300: rgb(var(--tw-clr-primary-300)); /* #00e887 */
-  --clr-primary-400: rgb(var(--tw-clr-primary-400)); /* #00e0f3 */
-  --clr-primary-500: rgb(var(--tw-clr-primary-500)); /* #00c4fd */
+  --clr-primary-200: rgb(var(--tw-clr-primary-200)); /* specular */
+  --clr-primary-300: rgb(var(--tw-clr-primary-300)); /* body */
+  --clr-primary-400: rgb(var(--tw-clr-primary-400)); /* burnished */
+  --clr-primary-500: rgb(var(--tw-clr-primary-500)); /* deep bronze */
 }
 
 @layer base {
@@ -88,18 +89,23 @@
     @apply min-h-[calc(100vh-82px)];
   }
   .accent {
-    @apply dark:bg-gradient-to-tr dark:from-primary-300 dark:to-primary-400 dark:bg-clip-text dark:text-transparent;
+    @apply dark:bg-gradient-to-br dark:from-primary-200 dark:via-primary-300 dark:to-primary-500 dark:bg-clip-text dark:text-transparent;
   }
 
   .accent-highlight {
-    @apply bg-primary-300/50 dark:bg-gradient-to-tr dark:from-primary-300 dark:to-primary-400 dark:bg-clip-text dark:text-transparent;
+    @apply bg-primary-300/40 dark:bg-gradient-to-br dark:from-primary-200 dark:via-primary-300 dark:to-primary-500 dark:bg-clip-text dark:text-transparent;
   }
 }
 
 @layer utilities {
   .animated-underline {
     background-image: linear-gradient(#33333300, #33333300),
-      linear-gradient(to right, var(--clr-primary-300), var(--clr-primary-400));
+      linear-gradient(
+        to right,
+        var(--clr-primary-200),
+        var(--clr-primary-300),
+        var(--clr-primary-500)
+      );
     background-size: 100% 2px, 0 2px;
     background-position: 100% 100%, 0 100%;
     background-repeat: no-repeat;

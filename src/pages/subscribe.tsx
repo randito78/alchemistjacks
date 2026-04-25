@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Accent from '@/components/Accent';
-import SubscribeCard from '@/components/content/blog/SubscribeCard';
+import SubscribeCard from '@/components/content/posts/SubscribeCard';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 
@@ -10,14 +10,14 @@ export default function SubscribePage() {
     <Layout>
       <Seo
         templateTitle='Subscribe'
-        description='Get notified every time there is a new post through your email.'
+        description='Get notified every time there is a new project write-up through your email.'
       />
 
       <main>
         <section className=''>
           <div className='layout flex flex-col items-center py-20 text-center'>
             <h1>
-              Subscribe to <Accent>theodorusclarence.com</Accent>
+              Subscribe to <Accent>alchemistjacks.com</Accent>
             </h1>
             <SubscribeCard className='mt-8 text-left' />
           </div>

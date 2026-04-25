@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import * as React from 'react';
 
-import CloudinaryImg from '@/components/images/CloudinaryImg';
+import BannerImage from '@/components/images/BannerImage';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import TechIcons, { TechListType } from '@/components/TechIcons';
 
@@ -11,7 +11,44 @@ type ProjectCardProps = {
   project: ProjectFrontmatter;
 } & React.ComponentPropsWithoutRef<'li'>;
 
+function externalProjectUrl(project: ProjectFrontmatter) {
+  const raw = project.link ?? project.github;
+  if (!raw || raw.startsWith('/')) return undefined;
+  return raw;
+}
+
 export default function ProjectCard({ project, className }: ProjectCardProps) {
+  const href = externalProjectUrl(project);
+
+  const innerClassName =
+    'flex h-full flex-col items-start rounded-md p-4 focus:outline-none focus-visible:ring focus-visible:ring-primary-300';
+
+  const inner = (
+    <>
+      <h4>{project.title}</h4>
+      <p className='mb-auto text-sm text-gray-700 dark:text-gray-300'>
+        {project.description}
+      </p>
+      <div className='mt-2'>
+        <TechIcons techs={project.techs.split(',') as Array<TechListType>} />
+      </div>
+
+      <BannerImage
+        banner={project.banner}
+        alt={project.title}
+        aspectClassName='aspect-[1440/792]'
+        className='pointer-events-none mt-3 w-full rounded-sm'
+        sizes='(max-width: 768px) 100vw, 480px'
+      />
+
+      {href ? (
+        <p className='animated-underline mt-2 inline-block font-medium'>
+          See more →
+        </p>
+      ) : null}
+    </>
+  );
+
   return (
     <li
       className={clsx(
@@ -24,31 +61,13 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
         className
       )}
     >
-      <UnstyledLink
-        href={`/projects/${project.slug}`}
-        className='flex h-full flex-col items-start rounded-md p-4 focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
-      >
-        <h4>{project.title}</h4>
-        <p className='mb-auto text-sm text-gray-700 dark:text-gray-300'>
-          {project.description}
-        </p>
-        <div className='mt-2'>
-          <TechIcons techs={project.techs.split(',') as Array<TechListType>} />
-        </div>
-
-        <CloudinaryImg
-          className='pointer-events-none mt-3 w-full'
-          publicId={`theodorusclarence/${project.banner}`}
-          alt={project.title}
-          width={1440}
-          height={792}
-          preview={false}
-        />
-
-        <p className='animated-underline mt-2 inline-block font-medium'>
-          See more →
-        </p>
-      </UnstyledLink>
+      {href ? (
+        <UnstyledLink href={href} className={innerClassName}>
+          {inner}
+        </UnstyledLink>
+      ) : (
+        <div className={innerClassName}>{inner}</div>
+      )}
     </li>
   );
 }

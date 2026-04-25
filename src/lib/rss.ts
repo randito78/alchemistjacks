@@ -4,9 +4,9 @@ import fs from 'fs';
 import { getAllFilesFrontmatter } from '@/lib/mdx.server';
 
 export async function getRssXml() {
-  const frontmatters = await getAllFilesFrontmatter('blog');
+  const frontmatters = await getAllFilesFrontmatter('projects');
 
-  const blogUrl = 'https://theodorusclarence.com/blog';
+  const projectsUrl = 'https://alchemistjacks.com/projects';
 
   const itemXml = frontmatters
     .filter((fm) => !fm.slug.startsWith('id-'))
@@ -15,8 +15,8 @@ export async function getRssXml() {
     <item>
       <title>${cdata(title)}</title>
       <description>${cdata(description)}</description>
-      <link>${blogUrl}/${slug}</link>
-      <guid>${blogUrl}/${slug}</guid>
+      <link>${projectsUrl}/${slug}</link>
+      <guid>${projectsUrl}/${slug}</guid>
       <pubDate>${format(
         new Date(lastUpdated ?? publishedAt),
         'yyyy-MM-dd'
@@ -26,11 +26,11 @@ export async function getRssXml() {
     );
 
   return `
-    <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:blogChannel="${blogUrl}">
+    <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:blogChannel="${projectsUrl}">
       <channel>
-        <title>Theodorus Clarence Blog</title>
-        <link>${blogUrl}</link>
-        <description>The Theodorus Clarence Blog, thoughts, mental models, and tutorials about front-end development.</description>
+        <title>AlchemistJack's — Projects</title>
+        <link>${projectsUrl}</link>
+        <description>Project write-ups, mental models, and tutorials about front-end development.</description>
         <language>en</language>
         <ttl>40</ttl>
         ${itemXml.join('\n')}
