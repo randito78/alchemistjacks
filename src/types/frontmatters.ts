@@ -17,7 +17,8 @@ export type BlogFrontmatter = {
 /** MDX content under `src/contents/projects` (project write-ups). */
 export type ContentType = 'projects';
 
-export type PickFrontmatter<T extends ContentType> = BlogFrontmatter;
+export type PickFrontmatter<_T extends ContentType = ContentType> =
+  BlogFrontmatter;
 
 export type InjectedMeta = { views?: number; likes?: number };
 

@@ -1,12 +1,11 @@
 import clsx from 'clsx';
 import { InferGetStaticPropsType } from 'next';
 import * as React from 'react';
-import { IoArrowDownOutline } from 'react-icons/io5';
 import { FaInstagram, FaStore } from 'react-icons/fa';
+import { IoArrowDownOutline } from 'react-icons/io5';
 import { InView } from 'react-intersection-observer';
 
 import { sortByDate } from '@/lib/mdx.client';
-import { trackEvent } from '@/lib/analytics';
 import { getAllFilesFrontmatter, getFeatured } from '@/lib/mdx.server';
 import { generateRss } from '@/lib/rss';
 import useInjectContentMeta from '@/hooks/useInjectContentMeta';
@@ -16,10 +15,9 @@ import Accent from '@/components/Accent';
 import BlogCard from '@/components/content/posts/BlogCard';
 import Layout from '@/components/layout/Layout';
 import ButtonLink from '@/components/links/ButtonLink';
-import CustomLink from '@/components/links/CustomLink';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
-import Tooltip from '@/components/Tooltip';
+
 import type { BlogFrontmatter } from '@/types/frontmatters';
 
 function uniqueBySlug(posts: BlogFrontmatter[]) {
@@ -33,10 +31,8 @@ function uniqueBySlug(posts: BlogFrontmatter[]) {
 
 export default function IndexPage({
   featuredPosts,
-  introPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const populatedPosts = useInjectContentMeta('projects', featuredPosts);
-  const populatedIntro = useInjectContentMeta('projects', introPosts);
 
   const isLoaded = useLoaded();
 
@@ -223,10 +219,7 @@ export default function IndexPage({
                     />
                   ))}
                 </ul>
-                <ButtonLink
-                  className='mt-4'
-                  href='/projects'
-                >
+                <ButtonLink className='mt-4' href='/projects'>
                   See what I've made
                 </ButtonLink>
               </article>
@@ -252,27 +245,14 @@ export async function getStaticProps() {
     'nextjs-auth-hoc',
     'nextjs-fetch-method',
   ]);
-  const preferredIntro = getFeatured(posts, [
-    'btb-flex-mental-model',
-    'nextjs-fetch-method',
-  ]);
-
   const featuredPosts = uniqueBySlug([
     ...preferredFeatured,
-    ...sorted.filter(
-      (b) => !preferredFeatured.some((p) => p.slug === b.slug)
-    ),
+    ...sorted.filter((b) => !preferredFeatured.some((p) => p.slug === b.slug)),
   ]).slice(0, 6);
-
-  const introPosts = uniqueBySlug([
-    ...preferredIntro,
-    ...sorted.filter((b) => !preferredIntro.some((p) => p.slug === b.slug)),
-  ]).slice(0, 2);
 
   return {
     props: {
       featuredPosts,
-      introPosts,
     },
   };
 }

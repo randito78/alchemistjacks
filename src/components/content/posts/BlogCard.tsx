@@ -54,7 +54,7 @@ export default function BlogCard({
           >
             {post.tags.split(',').map((tag) => (
               <Tag
-                tabIndex={-1}
+                decorative
                 className='bg-opacity-80 dark:!bg-opacity-60'
                 key={tag}
               >

@@ -39,20 +39,6 @@ export const newsletterFlag =
   isProd || process.env.NEXT_PUBLIC_FLAG_NEWSLETTER === 'true';
 
 /**
- * Console to the browser greeting message
- * @see Layout.tsx
- */
-export const sayHelloFlag =
-  isProd || process.env.NEXT_PUBLIC_FLAG_SAY_HELLO === 'true';
-
-/**
- * Console to the browser greeting message
- * @see Footer.tsx
- */
-export const feedbackFlag =
-  isProd || process.env.NEXT_PUBLIC_FLAG_FEEDBACK === 'true';
-
-/**
  * Only increase count when in specified domain meta
  * @see _app.tsx
  */
