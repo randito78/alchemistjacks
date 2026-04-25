@@ -11,6 +11,8 @@ const defaultMeta = {
   url: 'https://alchemistjacks.com',
   type: 'website',
   robots: 'follow, index',
+  /** Open Graph / Twitter image URL, set from `openGraph()` */
+  image: '',
 };
 
 type SeoProps = {

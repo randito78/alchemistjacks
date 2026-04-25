@@ -106,12 +106,12 @@ export default function CloudinaryImg({
         `}</style>
         <div className='absolute left-0 top-0'>
           <Image
-            width={
+            width={Number(
               resizedToMaxWidth ? Math.min(+width, RESIZE_MAX_WIDTH) : width
-            }
-            height={
+            )}
+            height={Number(
               resizedToMaxWidth ? (RESIZE_MAX_WIDTH * +height) / +width : height
-            }
+            )}
             unoptimized
             src={url}
             alt={alt}

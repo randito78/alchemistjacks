@@ -38,10 +38,10 @@ export default function BannerImage({
       <Image
         src={src}
         alt={alt}
-        layout='fill'
-        objectFit='cover'
+        fill
         sizes={sizes}
         priority={priority}
+        className='object-cover'
       />
     </div>
   );

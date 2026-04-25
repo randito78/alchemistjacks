@@ -59,11 +59,7 @@ export default function SingleBlogPage({
   const ogBannerUrl = getOgBannerAbsoluteUrl(frontmatter.banner);
   //#endregion  //*======== Link Constants ===========
 
-  //#region  //*=========== Blog Language ===========
-  // TODO: add implementation, should be bugged if folder/id-slug.mdx
   const cleanSlug = cleanBlogPrefix(frontmatter.slug);
-  const isEnglish = cleanSlug === frontmatter.slug;
-  //#endregion  //*======== Blog Language ===========
 
   //#region  //*=========== Content Meta ===========
   const contentSlug = `p_${cleanSlug}`;
@@ -178,14 +174,6 @@ export default function SingleBlogPage({
                   </div>
                 )}
               </div>
-              {!frontmatter?.englishOnly && (
-                <CustomLink
-                  href={`/projects/${isEnglish ? 'id-' : ''}${cleanSlug}`}
-                  className='mt-4'
-                >
-                  Read in {isEnglish ? 'Bahasa Indonesia' : 'English'}
-                </CustomLink>
-              )}
             </div>
 
             <hr className='dark:border-gray-600' />
@@ -249,8 +237,12 @@ export default function SingleBlogPage({
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getFileSlugArray('projects');
 
+  const englishPaths = posts.filter(
+    (slug) => !slug[slug.length - 1]?.startsWith('id-')
+  );
+
   return {
-    paths: posts.map((slug) => ({
+    paths: englishPaths.map((slug) => ({
       params: {
         slug,
       },

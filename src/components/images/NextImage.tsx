@@ -25,6 +25,8 @@ export default function NextImage({
   className,
   imgClassName,
   blurClassName,
+  sizes,
+  style,
   ...rest
 }: NextImageProps) {
   const [status, setStatus] = React.useState(
@@ -45,11 +47,19 @@ export default function NextImage({
           status === 'loading' && clsx('animate-pulse', blurClassName)
         )}
         src={src}
-        width={width}
-        height={height}
+        width={typeof width === 'string' ? parseInt(width, 10) : width}
+        height={typeof height === 'string' ? parseInt(height, 10) : height}
         alt={alt}
         onLoadingComplete={() => setStatus('complete')}
-        layout='responsive'
+        sizes={
+          sizes ??
+          '(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 1200px'
+        }
+        style={{
+          width: '100%',
+          height: 'auto',
+          ...(style && typeof style === 'object' ? style : {}),
+        }}
         {...rest}
       />
     </figure>

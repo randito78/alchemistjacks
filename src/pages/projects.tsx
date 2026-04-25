@@ -10,9 +10,7 @@ import useInjectContentMeta from '@/hooks/useInjectContentMeta';
 import useLoaded from '@/hooks/useLoaded';
 
 import Accent from '@/components/Accent';
-import Button from '@/components/buttons/Button';
 import BlogCard from '@/components/content/posts/BlogCard';
-import SubscribeCard from '@/components/content/posts/SubscribeCard';
 import ContentPlaceholder from '@/components/content/ContentPlaceholder';
 import Tag, { SkipNavTag } from '@/components/content/Tag';
 import StyledInput from '@/components/form/StyledInput';
@@ -43,7 +41,6 @@ export default function IndexPage({
   const [sortOrder, setSortOrder] = React.useState<SortOption>(
     () => sortOptions[Number(getFromSessionStorage('projects-sort')) || 0]
   );
-  const [isEnglish, setIsEnglish] = React.useState<boolean>(true);
   const isLoaded = useLoaded();
 
   const populatedPosts = useInjectContentMeta('projects', posts);
@@ -57,8 +54,6 @@ export default function IndexPage({
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
-  const clearSearch = () => setSearch('');
-
   React.useEffect(() => {
     const results = populatedPosts.filter(
       (post) =>
@@ -83,11 +78,7 @@ export default function IndexPage({
   }, [search, sortOrder.id, populatedPosts]);
   //#endregion  //*======== Search ===========
 
-  //#region  //*=========== Post Language Splitter ===========
-  const englishPosts = filteredPosts.filter((p) => !p.slug.startsWith('id-'));
-  const bahasaPosts = filteredPosts.filter((p) => p.slug.startsWith('id-'));
-  const currentPosts = isEnglish ? englishPosts : bahasaPosts;
-  //#endregion  //*======== Post Language Splitter ===========
+  const currentPosts = filteredPosts;
 
   //#region  //*=========== Tag ===========
   const toggleTag = (tag: string) => {
@@ -121,14 +112,14 @@ export default function IndexPage({
     <Layout>
       <Seo
         templateTitle='Projects'
-        description='Project write-ups, mental models, and tutorials about front-end development. Rebuild your mental model so front-end development can be predictable.'
+        description='Things I have made.'
       />
 
       <main>
         <section className={clsx(isLoaded && 'fade-in-start')}>
           <div className='layout py-12'>
             <h1 className='text-3xl md:text-5xl' data-fade='0'>
-              <Accent>Projects {!isEnglish && 'Bahasa Indonesia'}</Accent>
+              <Accent>Projects</Accent>
             </h1>
             <p className='mt-2 text-gray-600 dark:text-gray-300' data-fade='1'>
               Project write-ups, mental models, and tutorials about front-end
@@ -160,18 +151,9 @@ export default function IndexPage({
               </SkipNavTag>
             </div>
             <div
-              className='relative z-10 mt-6 flex flex-col items-end gap-4 text-gray-600 dark:text-gray-300 md:flex-row md:items-center md:justify-between'
+              className='relative z-10 mt-6 flex justify-end text-gray-600 dark:text-gray-300'
               data-fade='4'
             >
-              <Button
-                onClick={() => {
-                  setIsEnglish((b) => !b);
-                  clearSearch();
-                }}
-                className='text-sm !font-medium'
-              >
-                Read in {isEnglish ? 'Bahasa Indonesia' : 'English'}
-              </Button>
               <SortListbox
                 selected={sortOrder}
                 setSelected={setSortOrder}
@@ -194,7 +176,6 @@ export default function IndexPage({
                 <ContentPlaceholder />
               )}
             </ul>
-            <SubscribeCard className='mt-8' />
           </div>
         </section>
       </main>
@@ -204,9 +185,8 @@ export default function IndexPage({
 
 export async function getStaticProps() {
   const files = await getAllFilesFrontmatter('projects');
-  const posts = sortByDate(files);
+  const posts = sortByDate(files).filter((p) => !p.slug.startsWith('id-'));
 
-  // Accumulate tags and remove duplicate
   const tags = getTags(posts);
 
   return { props: { posts, tags } };

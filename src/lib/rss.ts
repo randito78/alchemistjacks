@@ -30,7 +30,7 @@ export async function getRssXml() {
       <channel>
         <title>AlchemistJack's — Projects</title>
         <link>${projectsUrl}</link>
-        <description>Project write-ups, mental models, and tutorials about front-end development.</description>
+        <description>Things I have made..</description>
         <language>en</language>
         <ttl>40</ttl>
         ${itemXml.join('\n')}

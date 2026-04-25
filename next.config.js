@@ -18,11 +18,17 @@ const nextConfig = {
     dirs: ['src'],
   },
   images: {
-    domains: [
-      'res.cloudinary.com',
-
-      // Spotify Album
-      'i.scdn.co',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.scdn.co',
+        pathname: '/**',
+      },
     ],
   },
 };

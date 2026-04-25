@@ -23,10 +23,12 @@ export default function UnstyledLink({
 
   if (!isNewTab) {
     return (
-      <Link href={href}>
-        <a {...rest} className={clsx('cursor-pointer', className)}>
-          {children}
-        </a>
+      <Link
+        href={href}
+        className={clsx('cursor-pointer', className)}
+        {...rest}
+      >
+        {children}
       </Link>
     );
   }
