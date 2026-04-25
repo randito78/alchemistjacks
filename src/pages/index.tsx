@@ -47,30 +47,26 @@ export default function IndexPage({
             isLoaded && 'fade-in-start'
           )}
         >
-          <article className='layout'>
-            <h1
-              className='mt-1 text-3xl md:text-5xl 2xl:text-6xl'
-              data-fade='2'
-            >
-              <Accent>Alchemist</Accent>
-              <Accent>Jack's</Accent>
-            </h1>
-            <p
-              className='mt-2 max-w-4xl leading-relaxed text-gray-700 dark:text-gray-200 md:mt-3 text-sm md:text-base 2xl:text-lg'
-              data-fade='2'
-            >
-              By Randal Brookins
-            </p>
+          <article className='layout flex flex-col items-center text-center'>
+            <div className='mt-1 w-fit max-w-full' data-fade='2'>
+              <h1 className='text-3xl !leading-[0.7] md:text-5xl 2xl:text-6xl'>
+                <Accent>Alchemist</Accent>
+                <Accent>Jack's</Accent>
+              </h1>
+              <p className='mt-0 text-right text-sm leading-none text-gray-700 dark:text-gray-200 md:text-base 2xl:text-lg'>
+                By Randal Brookins
+              </p>
+            </div>
 
             <p
-              className='mt-3 max-w-4xl leading-relaxed text-gray-700 dark:text-gray-200 md:mt-4 md:text-lg 2xl:text-xl'
+              className='mx-auto mt-12 max-w-4xl leading-relaxed text-gray-700 dark:text-gray-200 md:mt-16 md:text-lg 2xl:text-xl'
               data-fade='4'
             >
               Art, plating, 3D printing, and more...
             </p>
             <div
               data-fade='5'
-              className='mt-8 flex flex-wrap gap-4 md:!text-lg'
+              className='mt-8 flex flex-wrap justify-center gap-4 md:!text-lg'
             >
               <div className='group relative'>
                 <div
@@ -82,14 +78,14 @@ export default function IndexPage({
                 />
                 <ButtonLink href='#intro'>See what I've made</ButtonLink>
               </div>
-              <ButtonLink href='/about'>Learn about Alchemy</ButtonLink>
+              <ButtonLink href='/about'>Learn about what I do</ButtonLink>
             </div>
             <div
               data-fade='6'
-              className='mt-4 flex flex-wrap gap-4 gap-y-2 md:mt-8'
+              className='mt-4 flex flex-wrap justify-center gap-4 gap-y-2 md:mt-8'
             >
               <UnstyledLink
-                href='https://clarence.link/cv'
+                href='https://www.instagram.com/alchemistjacks'
                 className={clsx(
                   'inline-flex items-center gap-1 text-sm font-medium md:text-base',
                   'text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white',
@@ -102,7 +98,7 @@ export default function IndexPage({
               </UnstyledLink>
 
               <UnstyledLink
-                href='https://clarence.link/cv'
+                href='https://alchemistjacks.etsy.com'
                 className={clsx(
                   'inline-flex items-center gap-1 text-sm font-medium md:text-base',
                   'text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white',
