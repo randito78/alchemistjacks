@@ -1,9 +1,5 @@
 const path = require('path');
 
-const withRemoteRefresh = require('next-remote-refresh')({
-  paths: [path.resolve(__dirname, 'src', 'contents')],
-});
-
 /**
  * @type {import('next').NextConfig}
  */
@@ -34,4 +30,11 @@ const nextConfig = {
   },
 };
 
-module.exports = withRemoteRefresh(nextConfig);
+// next-remote-refresh rewrites next.config; Google Cloud / Firebase App Hosting
+// adapters patch the same file and can hang on "Restoring original next config".
+// Only enable the wrapper for local `next dev` (not `next build` or `next start`).
+module.exports = process.argv.includes('dev')
+  ? require('next-remote-refresh')({
+      paths: [path.resolve(__dirname, 'src', 'contents')],
+    })(nextConfig)
+  : nextConfig;
