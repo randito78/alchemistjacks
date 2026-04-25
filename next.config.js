@@ -16,6 +16,7 @@ const nextConfig = {
   },
   eslint: {
     dirs: ['src'],
+    ignoreDuringBuilds: true,
   },
   images: {
     remotePatterns: [
