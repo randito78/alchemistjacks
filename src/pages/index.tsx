@@ -13,6 +13,9 @@ import useLoaded from '@/hooks/useLoaded';
 
 import Accent from '@/components/Accent';
 import BlogCard from '@/components/content/posts/BlogCard';
+import MetallicJacksTitle, {
+  goldMetallicClassName,
+} from '@/components/MetallicJacksTitle';
 import Layout from '@/components/layout/Layout';
 import ButtonLink from '@/components/links/ButtonLink';
 import UnstyledLink from '@/components/links/UnstyledLink';
@@ -51,10 +54,12 @@ export default function IndexPage({
             <div className='mt-1 w-fit max-w-full' data-fade='2'>
               <h1 className='text-3xl !leading-[0.7] md:text-5xl 2xl:text-6xl'>
                 <Accent>Alchemist</Accent>
-                <Accent>Jack's</Accent>
+                <MetallicJacksTitle />
               </h1>
-              <p className='mt-0 text-right text-sm leading-none text-gray-700 dark:text-gray-200 md:text-base 2xl:text-lg'>
-                By Randal Brookins
+              <p className='mt-0 text-right text-sm leading-none md:text-base 2xl:text-lg'>
+                <span className={goldMetallicClassName}>
+                  By Randal Brookins
+                </span>
               </p>
             </div>
 
@@ -78,7 +83,17 @@ export default function IndexPage({
                 />
                 <ButtonLink href='/projects'>See what I've made</ButtonLink>
               </div>
-              <ButtonLink href='/about'>Learn about what I do</ButtonLink>
+              <div className='group relative'>
+                <div
+                  className={clsx(
+                    'absolute -inset-0.5 animate-tilt rounded blur',
+                    'bg-gradient-to-r from-slate-300 via-slate-400 to-slate-600',
+                    'opacity-70 transition duration-1000 group-hover:opacity-100 group-hover:duration-200',
+                    'dark:from-slate-500 dark:via-slate-400 dark:to-slate-600'
+                  )}
+                />
+                <ButtonLink href='/about'>Learn about what I do</ButtonLink>
+              </div>
             </div>
             <div
               data-fade='6'
