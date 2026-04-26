@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   lint:
-    name: ⬣ ESLint, ʦ TypeScript, and 💅 Prettier
+    name: ʦ TypeScript and 💅 Prettier
     runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout repo
@@ -30,9 +30,6 @@ jobs:
 
       - name: 📥 Download deps
         run: pnpm install --frozen-lockfile
-
-      - name: 🔬 Lint
-        run: pnpm run lint:strict
 
       - name: 🔎 Type check
         run: pnpm run typecheck

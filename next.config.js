@@ -10,10 +10,6 @@ const nextConfig = {
       { source: '/blog/:path*', destination: '/projects/:path*', permanent: true },
     ];
   },
-  eslint: {
-    dirs: ['src'],
-    ignoreDuringBuilds: true,
-  },
   images: {
     remotePatterns: [
       {
