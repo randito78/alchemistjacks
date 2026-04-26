@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+# local pnpm content-addressable store (never commit; can exceed GitHub 100MB blob limit)
+.pnpm-store/
 
 # testing
 /coverage
