@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AppProps } from 'next/app';
 import Router from 'next/router';
-import { useRemoteRefresh } from 'next-remote-refresh/hook';
+import useRemoteRefreshOptional from '@/hooks/useRemoteRefreshOptional';
 import { ThemeProvider } from 'next-themes';
 import nProgress from 'nprogress';
 import * as React from 'react';
@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, []);
 
-  useRemoteRefresh();
+  useRemoteRefreshOptional();
 
   return (
     <ThemeProvider attribute='class' defaultTheme='dark' enableSystem={false}>
