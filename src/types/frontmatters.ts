@@ -8,6 +8,8 @@ export type BlogFrontmatter = {
   title: string;
   description: string;
   banner: string;
+  /** Optional left/right hero images (paths like `projects/foo.png`). Cards & OG use `banner`. */
+  bannerSplit?: string[];
   publishedAt: string;
   lastUpdated?: string;
   tags: string;

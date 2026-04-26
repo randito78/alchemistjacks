@@ -6,7 +6,9 @@ import { HiOutlineClock, HiOutlineEye } from 'react-icons/hi';
 import Accent from '@/components/Accent';
 import Tag from '@/components/content/Tag';
 import BannerImage from '@/components/images/BannerImage';
+import ProjectSplitBanner from '@/components/images/ProjectSplitBanner';
 import UnstyledLink from '@/components/links/UnstyledLink';
+import { parseContentDate } from '@/lib/parseContentDate';
 
 import { BlogFrontmatter, InjectedMeta } from '@/types/frontmatters';
 
@@ -38,14 +40,25 @@ export default function BlogCard({
         href={`/projects/${post.slug}`}
       >
         <div className='relative'>
-          <BannerImage
-            banner={post.banner}
-            alt={post.title}
-            aspectClassName='aspect-[5/2]'
-            className='pointer-events-none'
-            rounded='top'
-            sizes='(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 400px'
-          />
+          {post.bannerSplit && post.bannerSplit.length >= 2 ? (
+            <ProjectSplitBanner
+              left={post.bannerSplit[0]}
+              right={post.bannerSplit[1]}
+              title={post.title}
+              aspectClassName='aspect-[5/2]'
+              className='pointer-events-none'
+              sizes='(max-width: 640px) 50vw, (max-width: 1280px) 25vw, 200px'
+            />
+          ) : (
+            <BannerImage
+              banner={post.banner}
+              alt={post.title}
+              aspectClassName='aspect-[5/2]'
+              className='pointer-events-none'
+              rounded='top'
+              sizes='(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 400px'
+            />
+          )}
           <div
             className={clsx(
               'absolute bottom-0 w-full px-4 py-2',
@@ -78,7 +91,7 @@ export default function BlogCard({
           <p className='mb-2 mt-4 text-sm text-gray-600 dark:text-gray-300'>
             <span className='font-bold text-gray-800 dark:text-gray-100'>
               {format(
-                new Date(post.lastUpdated ?? post.publishedAt),
+                parseContentDate(post.lastUpdated ?? post.publishedAt),
                 'MMMM dd, yyyy'
               )}
             </span>

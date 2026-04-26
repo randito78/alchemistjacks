@@ -3,6 +3,7 @@ import map from 'lodash/map';
 import sortBy from 'lodash/sortBy';
 import toPairs from 'lodash/toPairs';
 
+import { parseContentDate } from '@/lib/parseContentDate';
 import {
   Frontmatter,
   FrontmatterWithDate,
@@ -14,8 +15,8 @@ export function sortDateFn<T extends FrontmatterWithDate>(
   contentB: T
 ) {
   return (
-    new Date(contentB.lastUpdated ?? contentB.publishedAt).valueOf() -
-    new Date(contentA.lastUpdated ?? contentA.publishedAt).valueOf()
+    parseContentDate(contentB.lastUpdated ?? contentB.publishedAt).valueOf() -
+    parseContentDate(contentA.lastUpdated ?? contentA.publishedAt).valueOf()
   );
 }
 

@@ -2,6 +2,7 @@ import format from 'date-fns/format';
 import fs from 'fs';
 
 import { getAllFilesFrontmatter } from '@/lib/mdx.server';
+import { parseContentDate } from '@/lib/parseContentDate';
 
 export async function getRssXml() {
   const frontmatters = await getAllFilesFrontmatter('projects');
@@ -18,7 +19,7 @@ export async function getRssXml() {
       <link>${projectsUrl}/${slug}</link>
       <guid>${projectsUrl}/${slug}</guid>
       <pubDate>${format(
-        new Date(lastUpdated ?? publishedAt),
+        parseContentDate(lastUpdated ?? publishedAt),
         'yyyy-MM-dd'
       )}</pubDate>
     </item>

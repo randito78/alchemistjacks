@@ -8,10 +8,8 @@ import { HiOutlineClock, HiOutlineEye } from 'react-icons/hi';
 import { MdHistory } from 'react-icons/md';
 
 import { trackEvent } from '@/lib/analytics';
-import {
-  cleanBlogPrefix,
-  getOgBannerAbsoluteUrl,
-} from '@/lib/helper.client';
+import { cleanBlogPrefix, getOgBannerAbsoluteUrl } from '@/lib/helper.client';
+import { parseContentDate } from '@/lib/parseContentDate';
 import {
   getFileBySlug,
   getFileSlugArray,
@@ -30,6 +28,7 @@ import TableOfContents, {
   HeadingScrollSpy,
 } from '@/components/content/TableOfContents';
 import BannerImage from '@/components/images/BannerImage';
+import ProjectSplitBanner from '@/components/images/ProjectSplitBanner';
 import Layout from '@/components/layout/Layout';
 import CustomLink from '@/components/links/CustomLink';
 import UnstyledLink from '@/components/links/UnstyledLink';
@@ -96,7 +95,7 @@ export default function SingleBlogPage({
         description={frontmatter.description}
         isBlog
         banner={ogBannerUrl}
-        date={new Date(
+        date={parseContentDate(
           frontmatter.lastUpdated ?? frontmatter.publishedAt
         ).toISOString()}
         canonical={frontmatter.repost}
@@ -108,24 +107,41 @@ export default function SingleBlogPage({
         <section className=''>
           <div className='layout'>
             <div className='pb-4 dark:border-gray-600'>
-              <BannerImage
-                banner={frontmatter.banner}
-                alt={frontmatter.title}
-                aspectClassName='aspect-[5/2]'
-                priority
-              />
+              {frontmatter.bannerSplit &&
+              frontmatter.bannerSplit.length >= 2 ? (
+                <ProjectSplitBanner
+                  left={frontmatter.bannerSplit[0]}
+                  right={frontmatter.bannerSplit[1]}
+                  title={frontmatter.title}
+                  priority
+                  aspectClassName='aspect-[5/2]'
+                />
+              ) : (
+                <BannerImage
+                  banner={frontmatter.banner}
+                  alt={frontmatter.title}
+                  aspectClassName='aspect-[5/2]'
+                  priority
+                />
+              )}
 
               <h1 className='mt-4'>{frontmatter.title}</h1>
 
               <p className='mt-2 text-sm text-gray-600 dark:text-gray-300'>
                 Created on{' '}
-                {format(new Date(frontmatter.publishedAt), 'MMMM dd, yyyy')}
+                {format(
+                  parseContentDate(frontmatter.publishedAt),
+                  'MMMM dd, yyyy'
+                )}
               </p>
               {frontmatter.lastUpdated && (
                 <div className='mt-2 flex flex-wrap gap-2 text-sm text-gray-700 dark:text-gray-200'>
                   <p>
                     Last updated{' '}
-                    {format(new Date(frontmatter.lastUpdated), 'MMMM dd, yyyy')}
+                    {format(
+                      parseContentDate(frontmatter.lastUpdated),
+                      'MMMM dd, yyyy'
+                    )}
                     .
                   </p>
                   <UnstyledLink
@@ -151,9 +167,7 @@ export default function SingleBlogPage({
                     tipChildren={
                       <>
                         {meta.devtoViews.toLocaleString()} views on{' '}
-                        <CustomLink href='https://dev.to'>
-                          dev.to
-                        </CustomLink>
+                        <CustomLink href='https://dev.to'>dev.to</CustomLink>
                       </>
                     }
                     position='bottom'
