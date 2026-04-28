@@ -39,7 +39,6 @@ type OpenGraphType = {
   siteName: string;
   description: string;
   templateTitle?: string;
-  logo?: string;
   banner?: string;
   isBlog?: boolean;
   tags?: string;
@@ -49,31 +48,28 @@ export function openGraph({
   templateTitle,
   description,
   banner,
-  logo,
   isBlog = false,
   tags,
 }: OpenGraphType): string {
-  const ogSiteName = encodeURIComponent(siteName.trim());
-  const ogTemplateTitle = templateTitle
-    ? encodeURIComponent(templateTitle.trim())
-    : undefined;
-  const ogDesc = encodeURIComponent(description.trim());
-
   if (isBlog) {
+    const ogTemplateTitle = templateTitle
+      ? encodeURIComponent(templateTitle.trim())
+      : undefined;
     const ogTags = tags ? encodeURIComponent(tags.trim()) : undefined;
     const ogBanner = banner ? encodeURIComponent(banner.trim()) : undefined;
 
     return `https://og.clarence.link/api/blog?templateTitle=${ogTemplateTitle}&banner=${ogBanner}&tags=${ogTags}`;
   }
 
-  const logoPart =
-    logo && logo.length > 0
-      ? `&logo=${encodeURIComponent(logo)}`
-      : '';
+  const qs = new URLSearchParams({
+    siteName: siteName.trim(),
+    description: description.trim(),
+  });
+  if (templateTitle?.trim()) {
+    qs.set('templateTitle', templateTitle.trim());
+  }
 
-  return `https://og.clarence.link/api/gradient?siteName=${ogSiteName}&description=${ogDesc}${logoPart}${
-    ogTemplateTitle ? `&templateTitle=${ogTemplateTitle}` : ''
-  }`;
+  return `${SITE_URL}/api/og?${qs.toString()}`;
 }
 
 /**

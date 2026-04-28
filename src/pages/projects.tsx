@@ -110,10 +110,7 @@ export default function IndexPage({
 
   return (
     <Layout>
-      <Seo
-        templateTitle='Projects'
-        description='Things I have made.'
-      />
+      <Seo templateTitle='Projects' description='Things I have made.' />
 
       <main>
         <section className={clsx(isLoaded && 'fade-in-start')}>
@@ -122,8 +119,7 @@ export default function IndexPage({
               <Accent>Projects</Accent>
             </h1>
             <p className='mt-2 text-gray-600 dark:text-gray-300' data-fade='1'>
-              Project write-ups, mental models, and tutorials about front-end
-              development.
+              Completed projects and their stories.
             </p>
             <StyledInput
               data-fade='2'
