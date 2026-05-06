@@ -91,7 +91,7 @@ export default function BlogCard({
           <p className='mb-2 mt-4 text-sm text-gray-600 dark:text-gray-300'>
             <span className='font-bold text-gray-800 dark:text-gray-100'>
               {format(
-                parseContentDate(post.lastUpdated ?? post.publishedAt),
+                parseContentDate(post.lastUpdated ?? post.createdOn),
                 'MMMM dd, yyyy'
               )}
             </span>

@@ -96,7 +96,7 @@ export default function SingleBlogPage({
         isBlog
         banner={ogBannerUrl}
         date={parseContentDate(
-          frontmatter.lastUpdated ?? frontmatter.publishedAt
+          frontmatter.lastUpdated ?? frontmatter.createdOn
         ).toISOString()}
         canonical={frontmatter.repost}
         tags={frontmatter.tags}
@@ -127,13 +127,22 @@ export default function SingleBlogPage({
 
               <h1 className='mt-4'>{frontmatter.title}</h1>
 
-              <p className='mt-2 text-sm text-gray-600 dark:text-gray-300'>
-                Created on{' '}
-                {format(
-                  parseContentDate(frontmatter.publishedAt),
-                  'MMMM dd, yyyy'
-                )}
-              </p>
+              <div className='mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-300'>
+                <p>
+                  Created on:{' '}
+                  {format(
+                    parseContentDate(frontmatter.createdOn),
+                    'MMMM dd, yyyy'
+                  )}
+                </p>
+                <p>
+                  Published on:{' '}
+                  {format(
+                    parseContentDate(frontmatter.publishedAt),
+                    'MMMM dd, yyyy'
+                  )}
+                </p>
+              </div>
               {frontmatter.lastUpdated && (
                 <div className='mt-2 flex flex-wrap gap-2 text-sm text-gray-700 dark:text-gray-200'>
                   <p>

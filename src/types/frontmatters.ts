@@ -10,6 +10,9 @@ export type BlogFrontmatter = {
   banner: string;
   /** Optional left/right hero images (paths like `projects/foo.png`). Cards & OG use `banner`. */
   bannerSplit?: string[];
+  /** When the project was created or first written up (shown on cards and “Created on”). */
+  createdOn: string;
+  /** First git commit date for this file (“Published on”) and list sort. Set at build time in `getAllFilesFrontmatter`. */
   publishedAt: string;
   lastUpdated?: string;
   tags: string;
@@ -32,6 +35,7 @@ export type BlogType = {
 export type ProjectFrontmatter = {
   slug: string;
   title: string;
+  createdOn: string;
   publishedAt: string;
   lastUpdated?: string;
   description: string;
