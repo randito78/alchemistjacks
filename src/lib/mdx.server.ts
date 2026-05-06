@@ -1,9 +1,7 @@
-import { execSync } from 'child_process';
-import { format } from 'date-fns';
-import { promises, readFileSync, statSync } from 'fs';
+import { promises, readFileSync } from 'fs';
 import matter from 'gray-matter';
 import { bundleMDX } from 'mdx-bundler';
-import { join, relative } from 'path';
+import { join } from 'path';
 import readingTime from 'reading-time';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
@@ -18,45 +16,13 @@ import {
   PickFrontmatter,
 } from '@/types/frontmatters';
 
-/**
- * Date of the first commit touching `absolutePath` (YYYY-MM-DD), or file mtime if git is unavailable or file is untracked.
- */
-export function getFirstGitCommitDateForFile(absolutePath: string): string {
-  const rel = relative(process.cwd(), absolutePath);
-  try {
-    const date = execSync(
-      `git log --reverse --format=%cs -1 -- ${JSON.stringify(rel)}`,
-      {
-        cwd: process.cwd(),
-        encoding: 'utf8',
-        stdio: ['ignore', 'pipe', 'ignore'],
-      }
-    ).trim();
-    if (date) return date;
-  } catch {
-    // not a git repo, shallow clone, or file not yet tracked
+function assertProjectFrontmatter(data: Record<string, unknown>, path: string) {
+  if (typeof data.createdOn !== 'string' || !data.createdOn) {
+    throw new Error(`Project MDX must include createdOn: ${path}`);
   }
-  return format(statSync(absolutePath).mtime, 'yyyy-MM-dd');
-}
-
-function withProjectPublishedAt<T extends ContentType>(
-  type: T,
-  absolutePath: string,
-  data: Record<string, unknown>
-): Record<string, unknown> {
-  if (type !== 'projects') {
-    return data;
+  if (typeof data.publishedOn !== 'string' || !data.publishedOn) {
+    throw new Error(`Project MDX must include publishedOn: ${path}`);
   }
-  const createdOn = data.createdOn;
-  if (typeof createdOn !== 'string' || !createdOn) {
-    throw new Error(
-      `Project frontmatter must include createdOn: ${absolutePath}`
-    );
-  }
-  return {
-    ...data,
-    publishedAt: getFirstGitCommitDateForFile(absolutePath),
-  };
 }
 
 export async function getFileSlugArray(type: ContentType) {
@@ -111,15 +77,16 @@ export async function getFileBySlug(type: ContentType, slug: string) {
     ? join(process.cwd(), 'src', 'contents', type, `${slug}.mdx`)
     : join(process.cwd(), 'src', 'contents', `${type}.mdx`);
 
+  const fm = { ...(frontmatter as Record<string, unknown>) };
+  assertProjectFrontmatter(fm, absolutePath);
+
   return {
     code,
     frontmatter: {
       wordCount: source.split(/\s+/gu).length,
       readingTime: readingTime(source),
       slug: slug || null,
-      ...withProjectPublishedAt(type, absolutePath, {
-        ...(frontmatter as Record<string, unknown>),
-      }),
+      ...fm,
     },
   };
 }
@@ -145,13 +112,12 @@ export async function getAllFilesFrontmatter<T extends ContentType>(type: T) {
   return files.reduce((allPosts: Array<PickFrontmatter<T>>, absolutePath) => {
     const source = readFileSync(absolutePath, 'utf8');
     const { data } = matter(source);
-    const merged = withProjectPublishedAt(type, absolutePath, {
-      ...(data as Record<string, unknown>),
-    });
+    const dataRecord = data as Record<string, unknown>;
+    assertProjectFrontmatter(dataRecord, absolutePath);
 
     const res = [
       {
-        ...(merged as PickFrontmatter<T>),
+        ...(data as PickFrontmatter<T>),
         slug: absolutePath
           .replace(join(process.cwd(), 'src', 'contents', type) + '/', '')
           .replace('.mdx', ''),

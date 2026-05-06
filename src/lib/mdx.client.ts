@@ -15,8 +15,8 @@ export function sortDateFn<T extends FrontmatterWithDate>(
   contentB: T
 ) {
   return (
-    parseContentDate(contentB.publishedAt).valueOf() -
-    parseContentDate(contentA.publishedAt).valueOf()
+    parseContentDate(contentB.publishedOn).valueOf() -
+    parseContentDate(contentA.publishedOn).valueOf()
   );
 }
 

@@ -6,7 +6,7 @@ import { IoArrowDownOutline } from 'react-icons/io5';
 import { InView } from 'react-intersection-observer';
 
 import { sortByDate } from '@/lib/mdx.client';
-import { getAllFilesFrontmatter, getFeatured } from '@/lib/mdx.server';
+import { getAllFilesFrontmatter } from '@/lib/mdx.server';
 import { generateRss } from '@/lib/rss';
 import useInjectContentMeta from '@/hooks/useInjectContentMeta';
 import useLoaded from '@/hooks/useLoaded';
@@ -222,12 +222,8 @@ export default function IndexPage({
                   <Accent>Featured projects</Accent>
                 </h2>
                 <ul className='mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3'>
-                  {populatedPosts.map((post, i) => (
-                    <BlogCard
-                      key={post.slug}
-                      post={post}
-                      className={clsx(i > 2 && 'hidden sm:block')}
-                    />
+                  {populatedPosts.map((post) => (
+                    <BlogCard key={post.slug} post={post} />
                   ))}
                 </ul>
                 <ButtonLink className='mt-4' href='/projects'>
@@ -246,20 +242,8 @@ export async function getStaticProps() {
   generateRss();
 
   const posts = await getAllFilesFrontmatter('projects');
-  const sorted = sortByDate([...posts]);
-
-  const preferredFeatured = getFeatured(posts, [
-    'gradient-border-is-hard',
-    'advanced-react-patterns',
-    'fully-reusable-components',
-    'react-core-concept-rendering-state',
-    'nextjs-auth-hoc',
-    'nextjs-fetch-method',
-  ]);
-  const featuredPosts = uniqueBySlug([
-    ...preferredFeatured,
-    ...sorted.filter((b) => !preferredFeatured.some((p) => p.slug === b.slug)),
-  ]).slice(0, 6);
+  const sortedByPublishedOn = sortByDate([...posts]);
+  const featuredPosts = uniqueBySlug(sortedByPublishedOn).slice(0, 3);
 
   return {
     props: {

@@ -89,12 +89,8 @@ export default function BlogCard({
             </div>
           </div>
           <p className='mb-2 mt-4 text-sm text-gray-600 dark:text-gray-300'>
-            <span className='font-bold text-gray-800 dark:text-gray-100'>
-              {format(
-                parseContentDate(post.lastUpdated ?? post.createdOn),
-                'MMMM dd, yyyy'
-              )}
-            </span>
+            Published on:{' '}
+            {format(parseContentDate(post.publishedOn), 'MMMM dd, yyyy')}
           </p>
           <p className='text-sm text-gray-700 dark:text-gray-300'>
             {post.description}

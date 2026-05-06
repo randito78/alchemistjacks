@@ -11,7 +11,7 @@ export async function getRssXml() {
 
   const itemXml = frontmatters
     .filter((fm) => !fm.slug.startsWith('id-'))
-    .map(({ slug, title, description, lastUpdated, createdOn }) =>
+    .map(({ slug, title, description, lastUpdated, publishedOn }) =>
       `
     <item>
       <title>${cdata(title)}</title>
@@ -19,7 +19,7 @@ export async function getRssXml() {
       <link>${projectsUrl}/${slug}</link>
       <guid>${projectsUrl}/${slug}</guid>
       <pubDate>${format(
-        parseContentDate(lastUpdated ?? createdOn),
+        parseContentDate(lastUpdated ?? publishedOn),
         'yyyy-MM-dd'
       )}</pubDate>
     </item>

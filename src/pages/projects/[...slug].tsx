@@ -138,7 +138,7 @@ export default function SingleBlogPage({
                 <p>
                   Published on:{' '}
                   {format(
-                    parseContentDate(frontmatter.publishedAt),
+                    parseContentDate(frontmatter.publishedOn),
                     'MMMM dd, yyyy'
                   )}
                 </p>
